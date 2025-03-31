@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <title>Thiết lập Từ Viết Tắt</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      width: 300px;
+      padding: 10px;
+      margin: 0;
+      background-color: #f5f5f5;
+      color: #333;
+      position: relative;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin: 10px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    #abbreviations {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="text"] {
+      padding: 5px;
+      font-size: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      flex: 1;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+
+    button#add {
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background-color 0.3s ease;
+    }
+
+    button#add:hover {
+      background-color: #2980b9;
+    }
+
+    ul#list {
+      list-style: none;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    ul#list li {
+      padding: 8px 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 12px;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    ul#list li:last-child {
+      border-bottom: none;
+    }
+
+    ul#list li:hover {
+      background-color: #f9f9f9;
+    }
+
+    .actions {
+      display: flex;
+      gap: 3px;
+    }
+
+    .edit-btn, .delete-btn {
+      padding: 3px 6px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    .edit-btn {
+      background-color: #f1c40f;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #d4ac0d;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .delete-btn:hover {
+      background-color: #c0392b;
+    }
+
+    #minimize-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      padding: 3px 8px;
+      background-color: #95a5a6;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    #minimize-btn:hover {
+      background-color: #7f8c8d;
+    }
+
+    #floating-icon {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: #3498db;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      text-align: center;
+      line-height: 40px;
+      color: white;
+      font-size: 20px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body style="width: 500px;">
+  <!-- <button id="minimize-btn">Thu nhỏ</button> -->
+  <h2>Thiết lập từ viết tắt</h2>
+  <div id="abbreviations">
+    <input type="text" id="short" placeholder="Từ viết tắt">
+    <input type="text" id="full" placeholder="Nội dung đầy đủ">
+    <button id="add">Thêm</button>
+  </div>
+  <ul id="list"></ul>
+  <div id="floating-icon">A</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
