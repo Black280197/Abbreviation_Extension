@@ -6,7 +6,8 @@
     "permissions": [
       "storage",
       "activeTab",
-      "identity"
+      "clipboardWrite",
+      "payments"
     ],
     "content_scripts": [
       {

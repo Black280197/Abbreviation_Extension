@@ -19,7 +19,9 @@ const defaultAbbreviations = {
     if (e.target.tagName === 'INPUT') {
       const value = e.target.value.trim();
       if (abbreviations[value]) {
-        e.target.value = abbreviations[value];
+        // e.target.value = abbreviations[value];
+        // e.target.dataset.initialValue = abbreviations[value];
+        simulatePaste(e.target, abbreviations[value]);
       }
     }
   });
@@ -29,7 +31,9 @@ const defaultAbbreviations = {
     if (e.target.tagName === 'TEXTAREA') {
       const value = e.target.value.trim();
       if (abbreviations[value]) {
-        e.target.value = abbreviations[value];
+        // e.target.value = abbreviations[value];
+        // e.target.dataset.initialValue = abbreviations[value];
+        simulatePaste(e.target, abbreviations[value]);
       }
     }
   });
@@ -50,4 +54,88 @@ const defaultAbbreviations = {
   
   if (checkTimeValidity()) {
     console.log('Extension đang hoạt động');
+  }
+
+
+  function simulatePaste(element, text) {
+    // Kiểm tra xem element và text hợp lệ
+    if (!element || !text || typeof text !== 'string') {
+      console.error('Invalid element or text');
+      return;
+    }
+  
+    // Copy text vào clipboard
+    navigator.clipboard.writeText(text).then(() => {
+      // Focus vào element để đảm bảo paste hoạt động
+      element.focus();
+  
+      // Giả lập sự kiện keydown cho Ctrl
+      const keydownCtrl = new KeyboardEvent('keydown', {
+        key: 'Control',
+        code: 'ControlLeft',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(keydownCtrl);
+  
+      // Giả lập sự kiện keydown cho phím V
+      const keydownV = new KeyboardEvent('keydown', {
+        key: 'v',
+        code: 'KeyV',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(keydownV);
+  
+      // Giả lập sự kiện paste
+      const pasteEvent = new ClipboardEvent('paste', {
+        clipboardData: new DataTransfer(),
+        bubbles: true,
+        cancelable: true
+      });
+      pasteEvent.clipboardData.setData('text/plain', text);
+      element.dispatchEvent(pasteEvent);
+  
+      // Cập nhật giá trị của element
+      element.value = text;
+  
+      // Giả lập sự kiện input
+      const inputEvent = new InputEvent('input', {
+        data: text,
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(inputEvent);
+  
+      // Giả lập sự kiện keyup cho phím V
+      const keyupV = new KeyboardEvent('keyup', {
+        key: 'v',
+        code: 'KeyV',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(keyupV);
+  
+      // Giả lập sự kiện keyup cho Ctrl
+      const keyupCtrl = new KeyboardEvent('keyup', {
+        key: 'Control',
+        code: 'ControlLeft',
+        ctrlKey: false,
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(keyupCtrl);
+  
+      // Giả lập sự kiện change
+      const changeEvent = new Event('change', {
+        bubbles: true,
+        cancelable: true
+      });
+      element.dispatchEvent(changeEvent);
+    }).catch(err => {
+      console.error('Failed to copy to clipboard:', err);
+    });
   }
